@@ -1,4 +1,6 @@
 import requests
+import openpyxl
+
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -6,6 +8,8 @@ url = 'https://www.imdb.com/chart/top/'
 options = Options()
 options.headless = True
 driver = webdriver.Chrome(options=options)
+excel=openpyxl.Workbook()
+print(excel.sheetnames)
 try:
     driver.get(url)
     #driver.raise_for_status()
@@ -35,9 +39,10 @@ try:
         
         #print(rank,movie_name,rating,year,run_time)
         vote_count=vote_count.strip('()')
+        vote=''
         for i in vote_count:
             if i!='(' and i!=')':
-                print(i,end="")
+                vote+=i
         break
         
         
