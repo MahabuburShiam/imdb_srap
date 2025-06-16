@@ -8,8 +8,16 @@ url = 'https://www.imdb.com/chart/top/'
 options = Options()
 options.headless = True
 driver = webdriver.Chrome(options=options)
+
+
 excel=openpyxl.Workbook()
-print(excel.sheetnames)
+#print(excel.sheetnames)
+sheet=excel.active
+sheet.title="Top rated movies all time"
+sheet.append(["Rank","Movie Name","Rating","Release Year","Run Time","Vote"])
+
+
+
 try:
     driver.get(url)
     #driver.raise_for_status()
@@ -43,7 +51,9 @@ try:
         for i in vote_count:
             if i!='(' and i!=')':
                 vote+=i
-        break
+        #print(vote)
+        sheet.append([rank,movie_name,rating,year,run_time,vote])
+        #break
         
         
     
@@ -52,6 +62,7 @@ try:
     
 except Exception as e:
     print(e)
+excel.save("Movie Ratings.xlsx")
     
     
     
